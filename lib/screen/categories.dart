@@ -6,8 +6,12 @@ import 'package:meals/widgets/category_griditem.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
-  void _SelectCategory(BuildContext context){
-    Navigator.push(context,MaterialPageRoute(builder: (ctx)=>Meals(title: "title", meals: [])));
+  void _SelectCategory(BuildContext context,Category category) {
+    
+    final filteredMeals= dummyMeals.where((meals) =>
+    meals.categories.contains(category.id)
+    ).toList();
+    Navigator.push(context,MaterialPageRoute(builder: (ctx)=>Meals(title: category.title, meals:filteredMeals )));
 
     
     
@@ -27,7 +31,7 @@ class CategoriesScreen extends StatelessWidget {
             title: category.title,
             color: category.color,
             onSelectCategory: () {
-              _SelectCategory(context);
+              _SelectCategory(context, category);
             },
           );
         }).toList(),
