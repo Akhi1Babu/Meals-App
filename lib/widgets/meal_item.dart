@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
 import 'package:meals/screen/meals.dart';
+import 'package:meals/widgets/meal_item_traint.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealItem extends StatelessWidget {
 
   final Meal meal;
-  const MealItem({super.key, required this.meal});
+final void Function(BuildContext context,Meal meal)? onSelectMeal;
+  const MealItem({super.key, required this.meal, this.onSelectMeal});
+  String get complexityText{
+    return meal.complexity.name[0].toUpperCase() + meal.complexity.name.substring(1);
+  }
+  String get affordabilityText{
+    return meal.affordability.name[0].toUpperCase() + meal.affordability.name.substring(1);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +26,14 @@ class MealItem extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       elevation: 10,
       child: InkWell(
-        onTap: (){},
+        onTap: (){
+          onSelectMeal!(context,meal);
+        },
+          
         child: Stack(
           children: [
             FadeInImage(placeholder: MemoryImage(kTransparentImage), image: NetworkImage(meal.imageUrl)
-            ,fit: BoxFit.cover, width: double.infinity,),
+            ,fit: BoxFit.cover, width: double.infinity,height: 200,),
             Positioned(
               left: 0,
               bottom: 0,
@@ -43,8 +54,14 @@ class MealItem extends StatelessWidget {
                     )),
                     const SizedBox(height: 10),
                      Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Text(meal.)
+                        MealItemTraint(icon: Icons.schedule, label: '${meal.duration} min'),
+                        SizedBox(width: 10),
+                        MealItemTraint(icon: Icons.work, label: complexityText),
+                         SizedBox(width: 10),
+                        MealItemTraint(icon: Icons.money, label: affordabilityText),
+
 
                       ],
                      )
