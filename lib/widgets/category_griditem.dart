@@ -15,20 +15,29 @@ class CategoryGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(1),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(colors: [
-          color.withOpacity(0.7),
-          color.withOpacity(0.9),
-          
-        ])
-      ),
-      child: Text(title,style: Theme.of(context).textTheme.titleLarge!.copyWith(
-      color: Theme.of(context).colorScheme.onPrimaryContainer,
-      ),),
-      
+    return InkWell(
+      onTap:(){
 
+      },
+      splashColor: Theme.of(context).colorScheme.onSecondary,
+      borderRadius: BorderRadius.circular(20),
+     
+      child: Container(
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          gradient: LinearGradient(colors: [
+            color.withOpacity(0.7),
+            color.withOpacity(0.9),
+            
+          ])
+        ),
+        child: Text(title,style: Theme.of(context).textTheme.titleLarge!.copyWith(
+        color: Theme.of(context).colorScheme.onPrimaryContainer,
+        ),),
+        
+      
+      ),
     ) ;
   }
 }
