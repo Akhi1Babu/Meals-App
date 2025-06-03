@@ -3,6 +3,7 @@ import 'package:meals/models/meal.dart';
 import 'package:meals/screen/meals.dart';
 import 'package:meals/widgets/meal_item_traint.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MealItem extends StatelessWidget {
 
@@ -60,7 +61,7 @@ final void Function(BuildContext context,Meal meal)? onSelectMeal;
                         SizedBox(width: 10),
                         MealItemTraint(icon: Icons.work, label: complexityText),
                          SizedBox(width: 10),
-                        MealItemTraint(icon: Icons.money, label: affordabilityText),
+                        MealItemTraint(icon: FontAwesomeIcons.dollarSign, label: affordabilityText),
 
 
                       ],
