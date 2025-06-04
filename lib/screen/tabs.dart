@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
 import 'package:meals/screen/categories.dart';
 import 'package:meals/screen/meals.dart';
+import 'package:meals/widgets/main_drawer.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({super.key});
@@ -35,6 +36,18 @@ class _TabScreenState extends State<TabScreen> {
       _selectedIndex = index;
     });
   }
+  void _setScreen(String identifier) {
+    if (identifier == 'meals') {
+     Navigator.pop(context); // Close the drawer
+      setState(() {
+        _selectedIndex = 0;
+      });
+    } else if (identifier == 'filers') {
+      setState(() {
+        
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +69,9 @@ class _TabScreenState extends State<TabScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(activePageTitle),
+      ),
+      drawer: MainDrawer(
+        onSelectScreen: _setScreen,
       ),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
