@@ -43,6 +43,46 @@ class _MealDetailsState extends State<MealDetails> {
     );
   }
 
+  Widget _buildSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Text(
+        title,
+        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+              fontWeight: FontWeight.bold,
+            ),
+      ),
+    );
+  }
+
+  Widget _buildListCard(String text, {int? stepNumber}) {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.3),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Theme.of(context).colorScheme.primaryContainer),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 4,
+            offset: Offset(2, 2),
+          )
+        ],
+      ),
+      child: Text(
+        stepNumber != null ? 'Step $stepNumber: $text' : '• $text',
+        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+              height: 1.4,
+            ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,48 +100,38 @@ class _MealDetailsState extends State<MealDetails> {
           children: [
             Image.network(widget.meal.imageUrl),
             const SizedBox(height: 16),
-            Text(
-              textAlign: TextAlign.center,
-              widget.meal.title,
-              style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimaryFixedVariant,
-                  ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              "Ingredients",
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                  ),
-            ),
-            const SizedBox(height: 15),
-            for (final ingredient in widget.meal.ingredients)
-              Text(
-                ingredient,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-              ),
-            const SizedBox(height: 20),
-            Text(
-              "Steps",
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                  ),
-            ),
-            const SizedBox(height: 15),
-            ...widget.meal.steps.map(
-              (step) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-                child: Text(
-                  step,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+           Text(
+  widget.meal.title,
+  textAlign: TextAlign.center,
+  style: TextStyle(
+    fontSize: 30,
+    fontWeight: FontWeight.bold,
+    letterSpacing: 1.2,
+    color: Theme.of(context).colorScheme.onPrimaryFixedVariant,
+    shadows: [
+      Shadow(
+        color: Colors.black26,
+        blurRadius: 4,
+        offset: Offset(1, 2),
+      ),
+    ],
+  ),
+),
+
+            const SizedBox(height: 24),
+
+            // Ingredients Section
+            _buildSectionTitle("Ingredients"),
+            ...widget.meal.ingredients.map((ingredient) => _buildListCard(ingredient)),
+
+            const SizedBox(height: 24),
+
+            // Steps Section
+            _buildSectionTitle("Steps"),
+            ...widget.meal.steps.asMap().entries.map(
+                  (entry) => _buildListCard(entry.value, stepNumber: entry.key + 1),
                 ),
-              ),
-            ),
+            const SizedBox(height: 24),
           ],
         ),
       ),
