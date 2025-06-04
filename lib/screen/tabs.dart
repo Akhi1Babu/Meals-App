@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals/models/meal.dart';
 import 'package:meals/screen/categories.dart';
 import 'package:meals/screen/meals.dart';
 
@@ -10,35 +11,60 @@ class TabScreen extends StatefulWidget {
 }
 
 class _TabScreenState extends State<TabScreen> {
+  final List<Meal> favouriteMeals = [];
+
+  void _toggleFavourite(Meal meal) {
+    final isExisting = favouriteMeals.contains(meal);
+    setState(() {
+      if (isExisting) {
+        favouriteMeals.remove(meal);
+      } else {
+        favouriteMeals.add(meal);
+      }
+    });
+  }
+
+  bool _isFavourite(Meal meal) {
+    return favouriteMeals.contains(meal);
+  }
+
   int _selectedIndex = 0;
-  var  activepageTitle = "Categories";
 
   void _selectPageIndex(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
+
   @override
   Widget build(BuildContext context) {
- 
-    Widget activePageIndex = CategoriesScreen();
-     if (_selectedIndex == 1) {  
-      // Load Settings Page
-      activepageTitle = "your favourite meals";
-      activePageIndex = Meals(title: activepageTitle, meals: []);
-      
+    String activePageTitle = "Categories";
+    Widget activePage = CategoriesScreen(
+      toggleFavourite: _toggleFavourite,
+      isMealFavourite: _isFavourite,
+    );
+
+    if (_selectedIndex == 1) {
+      activePageTitle = "Your Favourite Meals";
+      activePage = Meals(
+        meals: favouriteMeals,
+        toggleFavourite: _toggleFavourite,
+        isFavourite: _isFavourite,
+      );
     }
+
     return Scaffold(
-    body: activePageIndex,
-    bottomNavigationBar: BottomNavigationBar(
-      currentIndex: _selectedIndex,
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.set_meal), label: 'Catgeories'),
-        BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favourites'),
-      ],
-      onTap: _selectPageIndex,
-       
-        
+      appBar: AppBar(
+        title: Text(activePageTitle),
+      ),
+      body: activePage,
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.set_meal), label: 'Categories'),
+          BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favourites'),
+        ],
+        onTap: _selectPageIndex,
       ),
     );
   }
