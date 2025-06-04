@@ -25,12 +25,10 @@ class _TabScreenState extends State<TabScreen> {
      if (_selectedIndex == 1) {  
       // Load Settings Page
       activepageTitle = "your favourite meals";
-      activePageIndex = Meals(title: "Favourite", meals: []);
+      activePageIndex = Meals(title: activepageTitle, meals: []);
       
     }
-    return Scaffold(appBar: AppBar(
-      title: Text(activepageTitle),
-    ),
+    return Scaffold(
     body: activePageIndex,
     bottomNavigationBar: BottomNavigationBar(
       currentIndex: _selectedIndex,
