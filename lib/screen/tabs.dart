@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
 import 'package:meals/screen/categories.dart';
+import 'package:meals/screen/filters.dart';
 import 'package:meals/screen/meals.dart';
 import 'package:meals/widgets/main_drawer.dart';
 
@@ -37,15 +38,21 @@ class _TabScreenState extends State<TabScreen> {
     });
   }
   void _setScreen(String identifier) {
+     
     if (identifier == 'meals') {
+     // Close the drawer
      Navigator.pop(context); // Close the drawer
-      setState(() {
-        _selectedIndex = 0;
-      });
-    } else if (identifier == 'filers') {
-      setState(() {
+      // setState(() {
+      //   _selectedIndex = 0; // Switch to the first tab
+       
+       
+      // });
+    } else if (identifier == 'filters') {
+      Navigator.pop(context); // Close the drawer
+    
         
-      });
+         Navigator.push(context, MaterialPageRoute(builder: (context) => const FiltersScreen()));
+    
     }
   }
 
