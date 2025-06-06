@@ -60,7 +60,9 @@ class _TabScreenState extends State<TabScreen> {
     
         
         final result=await Navigator.push<Map<FilterOptions,bool>>( 
-          context, MaterialPageRoute(builder: (context) => const FiltersScreen()));
+          context, MaterialPageRoute(builder: (context) => FiltersScreen( 
+            curentFilters: Selctedfilters,
+          )));
           setState(() {
             
              Selctedfilters=result?? kInitialFilters;
